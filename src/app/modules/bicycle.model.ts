@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+import { BicylceInterface } from "./bicycle.interface";
 
 const { Schema } = mongoose;
 
-const bicycleSchema = new Schema(
+const bicycleSchema = new Schema<BicylceInterface>(
   {
     name: {
       type: String,
@@ -39,9 +40,11 @@ const bicycleSchema = new Schema(
   { timestamps: true }
 );
 
-const BicycleSchema = mongoose.model('Bicycle', bicycleSchema);
+
+
+export const BicycleSchema = mongoose.model('Bicycle', bicycleSchema);
 
 
 
 
-export default BicycleSchema;
+ 

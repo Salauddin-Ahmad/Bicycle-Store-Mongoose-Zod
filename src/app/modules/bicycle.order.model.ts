@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
+import { Orderinterface } from './bicycle.interface';
 
 const { Schema } = mongoose;
 
-const orderSchema = new Schema(
+const orderSchema = new Schema<Orderinterface>(
   {
     email: {
       type: String,

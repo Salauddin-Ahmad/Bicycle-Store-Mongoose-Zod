@@ -1,4 +1,5 @@
-export enum BicycleTypeInterface {
+import mongoose from 'mongoose';
+export enum TypeInterface {
     Mountain = 'Mountain',
     Road = 'Road',
     Hybrid = 'Hybrid',
@@ -6,12 +7,12 @@ export enum BicycleTypeInterface {
     Electric = 'Electric',
   }
   
-  export interface ProductInterface {
+  export interface BicylceInterface {
     _id: string;
     name: string;
     brand: string;
     price: number;
-    type: BicycleTypeInterface;
+    type: TypeInterface;
     description: string;
     quantity: number;
     inStock: boolean;
@@ -20,13 +21,14 @@ export enum BicycleTypeInterface {
   }
 
   
-  export interface Orderinterface {
-    _id: string;
-    email: string;
-    product: string;  // Product ObjectId
-    quantity: number;
-    totalPrice: number;
-    createdAt: string;
-    updatedAt: string;
-  }
-  
+
+
+export interface Orderinterface {
+  _id: mongoose.Types.ObjectId; // Correct type for ObjectId
+  email: string;
+  product: mongoose.Types.ObjectId; // Product should be an ObjectId, not a string
+  quantity: number;
+  totalPrice: number;
+  createdAt: string;
+  updatedAt: string;
+}
