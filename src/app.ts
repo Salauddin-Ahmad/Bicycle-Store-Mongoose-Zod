@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
+import { BicycleRoutes } from "./app/modules/bicycle.route";
 const app: Application = express();
 app.use(express.json());
 
