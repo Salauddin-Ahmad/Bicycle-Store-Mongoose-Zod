@@ -1,7 +1,6 @@
-import express, { RequestHandler } from 'express';
+import { RequestHandler } from 'express';
 import { BicycleValidation } from './bicycle.validation';
 import { BicycleServices } from './bicycle.service';
-
 
 const createBicycle: RequestHandler = async (req, res, next) => {
   try {

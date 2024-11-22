@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { BicylceInterface } from "./bicycle.interface";
+import mongoose from 'mongoose';
+import { BicylceInterface } from './bicycle.interface';
 
 const { Schema } = mongoose;
 
@@ -37,14 +37,7 @@ const bicycleSchema = new Schema<BicylceInterface>(
       default: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-
-
 export const BicycleSchema = mongoose.model('Bicycle', bicycleSchema);
-
-
-
-
- 
