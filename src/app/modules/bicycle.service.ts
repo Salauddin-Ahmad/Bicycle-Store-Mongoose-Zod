@@ -6,7 +6,8 @@ const createBicylceIntoDB = async (bicylce: BicylceInterface) => {
     const result = await BicycleSchema.create(bicylce);
     return result;
   } catch (error) {
-    throw new Error(`Error creating student: ${error.message}`);
+
+    throw new Error(`Error creating student: ${error}`);
   }
 };
 

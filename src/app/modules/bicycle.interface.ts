@@ -11,7 +11,7 @@ export enum TypeInterface {
 
 
 export type BicylceInterface = {
-  _id: string;
+  // _id: string;
   name: string;
   brand: string;
   price: number;
@@ -19,8 +19,8 @@ export type BicylceInterface = {
   description: string;
   quantity: number;
   inStock: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 
