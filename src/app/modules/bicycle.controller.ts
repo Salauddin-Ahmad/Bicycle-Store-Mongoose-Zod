@@ -22,35 +22,36 @@ const createBicycle: RequestHandler = async (req, res, next) => {
   }
 };
 
-// const getAllBicycles: RequestHandler = async (req, res, next) => {
-//   try {
-//     const result = await BicycleServices.getAllBicyclesFromDB();
-//     res.status(200).json({
-//       success: true,
-//       message: 'Bicycles retrieved successfully',
-//       data: result,
-//     });
-//   } catch (error) {
-//     next(error); // Pass to error handler
-//   }
-// };
+const getAllBicycles: RequestHandler = async (req, res, next) => {
+  try {
+    const result = await BicycleServices.getAllBicyclesFromDB();
+    res.status(200).json({
+      success: true,
+      message: 'Bicycles retrieved successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error); // Pass to error handler
+  }
+};
 
-// const getBicycleById: RequestHandler = async (req, res, next) => {
-//   try {
-//     const { bicycleId } = req.params;
-//     const result = await BicycleServices.getSingleBicycleById(bicycleId);
-//     res.status(200).json({
-//       success: true,
-//       message: 'Bicycle retrieved successfully',
-//       data: result,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+const getBicycleById: RequestHandler = async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+    console.log(productId)
+    const result = await BicycleServices.getSingleBicycleById(productId);
+    res.status(200).json({
+      success: true,
+      message: 'Bicycle retrieved successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const BicycleController = {
   createBicycle,
-  // getAllBicycles,
-  // getBicycleById,
+  getAllBicycles,
+  getBicycleById,
 };
