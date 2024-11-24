@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-
 export enum TypeInterface {
   Mountain = 'Mountain',
   Road = 'Road',
@@ -8,7 +7,6 @@ export enum TypeInterface {
   BMX = 'BMX',
   Electric = 'Electric',
 }
-
 
 export type BicylceInterface = {
   // _id: string;
@@ -21,14 +19,13 @@ export type BicylceInterface = {
   inStock: boolean;
   createdAt?: string;
   updatedAt?: string;
-}
+};
 
-
-export type Orderinterface = { 
+export type Orderinterface = {
   email: string;
   product: mongoose.Types.ObjectId; // Product should be an ObjectId, not a string
   quantity: number;
   totalPrice: number;
   createdAt?: string;
   updatedAt?: string;
-}
+};

@@ -5,12 +5,7 @@ const app: Application = express();
 app.use(express.json()); // Add this middleware to parse JSON requests
 app.use(cors());
 
-
-
-
-
 app.use('/api', BicycleRoutes);
-
 
 const getAcontroller = async (req: Request, res: Response) => {
   res.status(200).json({

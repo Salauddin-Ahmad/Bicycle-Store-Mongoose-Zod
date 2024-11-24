@@ -51,17 +51,20 @@ const deleteBicycleById = async (productId: string) => {
   return deletedBicycle; // Return the deleted bicycle or null if not found
 };
 
-
 //  Creates a new order and also upates the stock of product quantities
-const createNewOrder = async ({ email, product, quantity, totalPrice }: { 
-  email: string; 
-  product: string; 
-  quantity: number; 
-  totalPrice: number; 
+const createNewOrder = async ({
+  email,
+  product,
+  quantity,
+  totalPrice,
+}: {
+  email: string;
+  product: string;
+  quantity: number;
+  totalPrice: number;
 }) => {
   // Find the product in the database
-  const productDocument
-   = await BicycleSchema.findById(product);
+  const productDocument = await BicycleSchema.findById(product);
 
   if (!productDocument) {
     throw new Error('Product not found');
@@ -97,17 +100,14 @@ const createNewOrder = async ({ email, product, quantity, totalPrice }: {
 };
 
 const calculateRevenue = async () => {
-  const orders = await OrderSchema.aggregate([ 
-  {
-    $group: 
-    { _id: null,
-      totalrevenue: {$sum: "$totalPrice"}  
-    }
-  }
-]);
+  const orders = await OrderSchema.aggregate([
+    {
+      $group: { _id: null, totalrevenue: { $sum: '$totalPrice' } },
+    },
+  ]);
 
-return orders
-}
+  return orders;
+};
 
 export const BicycleServices = {
   createBicylceIntoDB,
@@ -117,5 +117,4 @@ export const BicycleServices = {
   deleteBicycleById,
   createNewOrder,
   calculateRevenue,
-
 };

@@ -7,8 +7,8 @@ const router = express.Router();
 router.post('/createcycle', BicycleController.createBicycle);
 router.get('/products', BicycleController.getAllBicycles);
 router.get('/products/:productId', BicycleController.getBicycleById);
-router.put('/products/:productId', BicycleController.updateBicycle)
-router.delete('/products/:productId', BicycleController.deleteBicycle)
+router.put('/products/:productId', BicycleController.updateBicycle);
+router.delete('/products/:productId', BicycleController.deleteBicycle);
 router.post('/orders', BicycleController.createOrder);
 router.get('/orders/revenue', BicycleController.countRevenue);
 

@@ -22,7 +22,8 @@ const bicycleSchema = new Schema<BicylceInterface>(
       type: String,
       enum: {
         values: ['Mountain', 'Road', 'Hybrid', 'BMX', 'Electric'],
-        message: 'Type must be one of Mountain, Road, Hybrid, BMX, or Electric. Received: {VALUE}',
+        message:
+          'Type must be one of Mountain, Road, Hybrid, BMX, or Electric. Received: {VALUE}',
       },
       required: [true, 'Type is required. Received: {VALUE}'],
     },

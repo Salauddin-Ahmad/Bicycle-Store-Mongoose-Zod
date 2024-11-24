@@ -2,11 +2,9 @@ import { RequestHandler } from 'express';
 import { BicycleValidation } from './bicycle.validation';
 import { BicycleServices } from './bicycle.service';
 
-
-//  The Flow is (url, cb function) @bicycle.route → → 
+//  The Flow is (url, cb function) @bicycle.route → →
 // (validation & error middleware , callback of services) @bicycle.controller → →
-// will do database ops @bicycle.services > 
-
+// will do database ops @bicycle.services >
 
 // create new bicycle into database
 const createBicycle: RequestHandler = async (req, res, next) => {
@@ -29,8 +27,7 @@ const createBicycle: RequestHandler = async (req, res, next) => {
   }
 };
 
-
-// get all bycycles from database 
+// get all bycycles from database
 const getAllBicycles: RequestHandler = async (req, res, next) => {
   try {
     const result = await BicycleServices.getAllBicyclesFromDB();
@@ -44,7 +41,7 @@ const getAllBicycles: RequestHandler = async (req, res, next) => {
   }
 };
 
-// get single bicycles from db by _id 
+// get single bicycles from db by _id
 const getBicycleById: RequestHandler = async (req, res, next) => {
   try {
     const { productId } = req.params;
@@ -59,13 +56,15 @@ const getBicycleById: RequestHandler = async (req, res, next) => {
   }
 };
 
-
 const updateBicycle: RequestHandler = async (req, res, next): Promise<void> => {
   try {
     const { productId } = req.params;
     const updateData = req.body;
 
-    const updatedBicycle = await BicycleServices.updateBicyclebyId(productId, updateData);
+    const updatedBicycle = await BicycleServices.updateBicyclebyId(
+      productId,
+      updateData,
+    );
 
     if (!updatedBicycle) {
       res.status(404).json({
@@ -80,7 +79,7 @@ const updateBicycle: RequestHandler = async (req, res, next): Promise<void> => {
       message: 'Bicycle updated successfully',
       data: updatedBicycle,
     });
-    return; 
+    return;
   } catch (error) {
     next(error); // Forward the error to the error-handling middleware
   }
@@ -106,18 +105,20 @@ const deleteBicycle: RequestHandler = async (req, res, next): Promise<void> => {
       status: true,
       data: deletedBicycle, // Include the deleted bicycle's data here
     });
-    
+
     return;
   } catch (error) {
-   next(error); // Forward the error to the error-handling middleware
+    next(error); // Forward the error to the error-handling middleware
   }
-}
+};
 
+
+// create new order
 const createOrder: RequestHandler = async (req, res, next) => {
   try {
     const { email, product, quantity, totalPrice } = req.body;
 
-    // Call the service to create the order and manage inventory
+    // Call the service to create the order and manage quantity
     const newOrder = await BicycleServices.createNewOrder({
       email,
       product,
@@ -135,7 +136,7 @@ const createOrder: RequestHandler = async (req, res, next) => {
   }
 };
 
-
+// count total revenue from orders
 const countRevenue: RequestHandler = async (req, res, next) => {
   try {
     const result = await BicycleServices.calculateRevenue();
@@ -143,7 +144,7 @@ const countRevenue: RequestHandler = async (req, res, next) => {
     if (result && result.length > 0) {
       const totalRevenue = result[0].totalrevenue; // Extract the value from the aggregation result
       res.status(200).json({
-        message: "Revenue calculated successfully",
+        message: 'Revenue calculated successfully',
         status: true,
         data: {
           totalRevenue,
@@ -151,7 +152,7 @@ const countRevenue: RequestHandler = async (req, res, next) => {
       });
     } else {
       res.status(200).json({
-        message: "Revenue calculated successfully",
+        message: 'Revenue calculated successfully',
         status: true,
         data: {
           totalRevenue: 0, // Default if no revenue is found
@@ -163,8 +164,6 @@ const countRevenue: RequestHandler = async (req, res, next) => {
   }
 };
 
-
-
 export const BicycleController = {
   createBicycle,
   getAllBicycles,
@@ -172,5 +171,5 @@ export const BicycleController = {
   updateBicycle,
   deleteBicycle,
   createOrder,
-  countRevenue
-}
+  countRevenue,
+};
