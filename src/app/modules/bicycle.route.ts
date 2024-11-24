@@ -10,5 +10,6 @@ router.get('/products/:productId', BicycleController.getBicycleById);
 router.put('/products/:productId', BicycleController.updateBicycle)
 router.delete('/products/:productId', BicycleController.deleteBicycle)
 router.post('/orders', BicycleController.createOrder);
+router.get('/orders/revenue', BicycleController.countRevenue);
 
 export const BicycleRoutes = router;

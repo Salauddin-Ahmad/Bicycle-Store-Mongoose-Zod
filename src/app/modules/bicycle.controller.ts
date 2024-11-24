@@ -59,47 +59,6 @@ const getBicycleById: RequestHandler = async (req, res, next) => {
   }
 };
 
-// // update bicycles from db by _id
-// const updateBicycle: RequestHandler = async (req, res, next) => {
-//   const productId = req.params;
-//   const updateNewData = req.body;
-//   const result = await BicycleController.updateBicyclebyId(productId, updateNewData);
-//   if (!updateBicycle) {
-//     return res.status(404).json({
-//       success: false,
-//       message: 'Bicycle not found',
-//     });
-//   }
-
-//   res.status(200).json({
-//     success: true,
-//     message: 'Bicycle updated successfully',
-//     data: updateBicyclebyId,
-//   });
-// } 
-
-// const updateBicycle: RequestHandler = async (req, res, next): Promise<void> => {
-//   try {
-//     const { productId } = req.params;
-//     const updateData = req.body; // Get the data to update from the request body
-
-//     const updatedBicycle = await BicycleServices.updateBicyclebyId(productId, updateData);
-
-//     if (!updatedBicycle) {
-//        res.status(404).json({
-//         success: false,
-//         message: 'Bicycle not found',
-//       });
-//     } else 
-//     res.status(200).json({
-//       success: true,
-//       message: 'Bicycle updated successfully',
-//       data: updatedBicycle,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 
 const updateBicycle: RequestHandler = async (req, res, next): Promise<void> => {
   try {
@@ -177,6 +136,34 @@ const createOrder: RequestHandler = async (req, res, next) => {
 };
 
 
+const countRevenue: RequestHandler = async (req, res, next) => {
+  try {
+    const result = await BicycleServices.calculateRevenue();
+
+    if (result && result.length > 0) {
+      const totalRevenue = result[0].totalrevenue; // Extract the value from the aggregation result
+      res.status(200).json({
+        message: "Revenue calculated successfully",
+        status: true,
+        data: {
+          totalRevenue,
+        },
+      });
+    } else {
+      res.status(200).json({
+        message: "Revenue calculated successfully",
+        status: true,
+        data: {
+          totalRevenue: 0, // Default if no revenue is found
+        },
+      });
+    }
+  } catch (error) {
+    next(error); // Pass the error to the global error handler
+  }
+};
+
+
 
 export const BicycleController = {
   createBicycle,
@@ -185,4 +172,5 @@ export const BicycleController = {
   updateBicycle,
   deleteBicycle,
   createOrder,
+  countRevenue
 }

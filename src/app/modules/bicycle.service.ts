@@ -95,6 +95,20 @@ const createNewOrder = async ({ email, product, quantity, totalPrice }: {
 
   return newOrder;
 };
+
+const calculateRevenue = async () => {
+  const orders = await OrderSchema.aggregate([ 
+  {
+    $group: 
+    { _id: null,
+      totalrevenue: {$sum: "$totalPrice"}  
+    }
+  }
+]);
+
+return orders
+}
+
 export const BicycleServices = {
   createBicylceIntoDB,
   getAllBicyclesFromDB,
@@ -102,4 +116,6 @@ export const BicycleServices = {
   updateBicyclebyId,
   deleteBicycleById,
   createNewOrder,
+  calculateRevenue,
+
 };
