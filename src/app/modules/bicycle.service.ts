@@ -40,21 +40,15 @@ const updateBicyclebyId = async (productId: string, updateData: Partial<typeof B
 };
 
 
-const deleteBicycleById = async (productId: string): Promise<boolean> => {
-  // Validate the productId
+const deleteBicycleById = async (productId: string) => {
+  // Validate the productId (ensure it matches MongoDB's ObjectId format)
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     throw new Error('Invalid Product ID');
   }
+  const deletedBicycle = await BicycleSchema.findByIdAndDelete(productId);
 
-  const result = await BicycleSchema.findByIdAndDelete(_id : productId);
-  return result!== null;
-  // Return true if a document was deleted, false otherwise
-
-
-
-
-}
-
+  return deletedBicycle; // Return the deleted bicycle or null if not found
+};
 
 export const BicycleServices = {
   createBicylceIntoDB,

@@ -143,9 +143,11 @@ const deleteBicycle: RequestHandler = async (req, res, next): Promise<void> => {
     }
 
     res.status(200).json({
-      success: true,
       message: 'Bicycle deleted successfully',
+      status: true,
+      data: deletedBicycle, // Include the deleted bicycle's data here
     });
+    
     return;
   } catch (error) {
    next(error); // Forward the error to the error-handling middleware
