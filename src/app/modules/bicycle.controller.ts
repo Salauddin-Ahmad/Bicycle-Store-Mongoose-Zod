@@ -154,6 +154,27 @@ const deleteBicycle: RequestHandler = async (req, res, next): Promise<void> => {
   }
 }
 
+const createOrder: RequestHandler = async (req, res, next) => {
+  try {
+    const { email, product, quantity, totalPrice } = req.body;
+
+    // Call the service to create the order and manage inventory
+    const newOrder = await BicycleServices.createNewOrder({
+      email,
+      product,
+      quantity,
+      totalPrice,
+    });
+
+    res.status(201).json({
+      message: 'Order created successfully',
+      status: true,
+      data: newOrder,
+    });
+  } catch (error) {
+    next(error); // Pass the error to the global error handler
+  }
+};
 
 
 
@@ -163,4 +184,5 @@ export const BicycleController = {
   getBicycleById,
   updateBicycle,
   deleteBicycle,
+  createOrder,
 }

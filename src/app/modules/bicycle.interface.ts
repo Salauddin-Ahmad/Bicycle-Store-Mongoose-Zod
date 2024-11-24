@@ -24,12 +24,11 @@ export type BicylceInterface = {
 }
 
 
-export type Orderinterface = {
-  _id: mongoose.Types.ObjectId; // Correct type for ObjectId
+export type Orderinterface = { 
   email: string;
   product: mongoose.Types.ObjectId; // Product should be an ObjectId, not a string
   quantity: number;
   totalPrice: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
