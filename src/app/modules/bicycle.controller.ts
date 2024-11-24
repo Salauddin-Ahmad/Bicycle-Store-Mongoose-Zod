@@ -9,10 +9,9 @@ import { BicycleServices } from './bicycle.service';
 // create new bicycle into database
 const createBicycle: RequestHandler = async (req, res, next) => {
   try {
-    const { bicycle: bicycleData } = req.body;
-
     // Data validation using Zod
-    const zodParsedData = BicycleValidation.parse(bicycleData);
+    // Directly validate req.body without nesting
+    const zodParsedData = BicycleValidation.parse(req.body);
 
     // Pass validated data to the service
     const result = await BicycleServices.createBicylceIntoDB(zodParsedData);
@@ -56,6 +55,7 @@ const getBicycleById: RequestHandler = async (req, res, next) => {
   }
 };
 
+// update the cycle with id from url params
 const updateBicycle: RequestHandler = async (req, res, next): Promise<void> => {
   try {
     const { productId } = req.params;
@@ -111,7 +111,6 @@ const deleteBicycle: RequestHandler = async (req, res, next): Promise<void> => {
     next(error); // Forward the error to the error-handling middleware
   }
 };
-
 
 // create new order
 const createOrder: RequestHandler = async (req, res, next) => {
