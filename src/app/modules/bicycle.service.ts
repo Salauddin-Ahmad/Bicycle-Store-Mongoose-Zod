@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import { BicylceInterface } from './bicycle.interface';
 import { BicycleSchema } from './bicycle.model';
-import { OrderValidationSchema } from './bicycle.order.validation';
 import { OrderSchema } from './bicycle.order.model';
 
 const createBicylceIntoDB = async (bicylce: BicylceInterface) => {

@@ -9,7 +9,7 @@ app.use('/api', BicycleRoutes);
 
 const getAcontroller = async (req: Request, res: Response) => {
   res.status(200).json({
-    message: 'Hit /api/bicycle/all to get all the data',
+    message: 'Bicycle store running successfully',
   });
 };
 
