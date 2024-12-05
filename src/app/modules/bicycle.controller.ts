@@ -56,7 +56,7 @@ const getBicycleById: RequestHandler = async (req, res, next) => {
 };
 
 // update the cycle with id from url params
-const updateBicycle: RequestHandler = async (req, res, next): Promise<void> => {
+const updateBicycle: RequestHandler = async (req, res, next) => {
   try {
     const { productId } = req.params;
     const updateData = req.body;
