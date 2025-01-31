@@ -57,7 +57,7 @@ const errorHandler = (err: any, req: Request, res: Response, next: NextFunction)
             properties: {
               message: e.message,
               type: e.code || "unknown",
-              min: e.minimum || 0, // Add min if it's available
+              min: 0, // Default min value
             },
             kind: e.code || "unknown",
             path: field,
