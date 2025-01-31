@@ -13,12 +13,12 @@ const createBicylceIntoDB = async (bicylce: BicylceInterface) => {
 };
 
 const getAllBicyclesFromDB = async () => {
-  const result = await BicycleSchema.find();
+  const result = await BicycleSchema.find().select('-__v');
   return result;
 };
 
 const getSingleBicycleById = async (id: string) => {
-  const result = await BicycleSchema.findOne({ _id: id });
+  const result = await BicycleSchema.findOne({ _id: id }).select('-__v');
   return result;
 };
 
@@ -35,7 +35,7 @@ const updateBicyclebyId = async (
     productId, // Filter by the _id
     { $set: updateData }, // Update the specified fields
     { new: true }, // Return the updated document
-  );
+  ).select('-__v');
 
   return updatedBicycle;
 };

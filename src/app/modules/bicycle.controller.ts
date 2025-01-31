@@ -31,8 +31,8 @@ const getAllBicycles: RequestHandler = async (req, res, next) => {
   try {
     const result = await BicycleServices.getAllBicyclesFromDB();
     res.status(200).json({
-      success: true,
       message: 'Bicycles retrieved successfully',
+      status: true,
       data: result,
     });
   } catch (error) {
@@ -46,8 +46,8 @@ const getBicycleById: RequestHandler = async (req, res, next) => {
     const { productId } = req.params;
     const result = await BicycleServices.getSingleBicycleById(productId);
     res.status(200).json({
-      success: true,
       message: 'Bicycle retrieved successfully',
+      status: true,
       data: result,
     });
   } catch (error) {
@@ -68,15 +68,15 @@ const updateBicycle: RequestHandler = async (req, res, next) => {
 
     if (!updatedBicycle) {
       res.status(404).json({
-        success: false,
         message: 'Bicycle not found',
+        status: false,
       });
       return; // Exit the function explicitly
     }
 
     res.status(200).json({
-      success: true,
       message: 'Bicycle updated successfully',
+     status: true,
       data: updatedBicycle,
     });
     return;

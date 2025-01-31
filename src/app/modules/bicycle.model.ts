@@ -43,7 +43,7 @@ const bicycleSchema = new Schema<BicylceInterface>(
       default: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true, versionKey: false },
 );
 
 export const BicycleSchema = mongoose.model('Bicycle', bicycleSchema);
