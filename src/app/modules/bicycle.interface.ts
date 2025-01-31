@@ -9,7 +9,7 @@ export enum TypeInterface {
 }
 
 export type BicylceInterface = {
-  // _id: string;
+  _id?: string;
   name: string;
   brand: string;
   price: number;

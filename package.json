@@ -13,6 +13,7 @@
     "prettier": "npx prettier --write \"src/**/*.{js,ts,json}\"",
     "prettier:fix": "npx prettier --write src"
   },
+  
   "keywords": [],
   "author": "",
   "license": "ISC",

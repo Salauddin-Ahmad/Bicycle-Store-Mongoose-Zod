@@ -5,6 +5,10 @@ const { Schema } = mongoose;
 
 const bicycleSchema = new Schema<BicylceInterface>(
   {
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      auto: true,
+    },
     name: {
       type: String,
       required: [true, 'Name is required. Received: {VALUE}'],

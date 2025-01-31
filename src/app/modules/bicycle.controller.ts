@@ -17,8 +17,8 @@ const createBicycle: RequestHandler = async (req, res, next) => {
     const result = await BicycleServices.createBicylceIntoDB(zodParsedData);
 
     res.status(201).json({
-      success: true,
       message: 'Bicycle created successfully',
+      success: true,
       data: result,
     });
   } catch (error) {
