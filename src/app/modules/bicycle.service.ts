@@ -103,8 +103,6 @@ const deleteBicycleById = async (productId: string) => {
 
 const createNewOrder = async ({ email, product, quantity, totalPrice }: { email: string; product: string; quantity: number; totalPrice: number; }) => {
   try {
-    console.log('Incoming product ID:', product);
-    
     // Check validity
     if (!mongoose.Types.ObjectId.isValid(product)) {
       throw new Error(`Invalid product ID: ${product}`);
@@ -112,11 +110,9 @@ const createNewOrder = async ({ email, product, quantity, totalPrice }: { email:
     
     // Convert product to ObjectId
     const productId = new mongoose.Types.ObjectId(product);
-    console.log('Converted productId:', productId);
 
     // Find the product in the database
     const productDocument = await BicycleSchema.findById(productId);
-    console.log('Product Retrieved from DB:', productDocument);
 
     if (!productDocument) {
       throw new Error(`Product not found: ${product}`);
