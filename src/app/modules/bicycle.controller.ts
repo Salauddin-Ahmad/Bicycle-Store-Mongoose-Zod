@@ -103,7 +103,7 @@ const deleteBicycle: RequestHandler = async (req, res, next): Promise<void> => {
     res.status(200).json({
       message: 'Bicycle deleted successfully',
       status: true,
-      data: deletedBicycle, // Include the deleted bicycle's data here
+      data: {}, // Include the deleted bicycle's data here
     });
 
     return;
