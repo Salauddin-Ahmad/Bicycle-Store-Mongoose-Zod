@@ -5,6 +5,10 @@ const { Schema } = mongoose;
 
 const orderSchema = new Schema<Orderinterface>(
   {
+    _id: {
+       type: mongoose.Schema.Types.ObjectId,
+      auto: true,
+     },
     email: {
       type: String,
       required: [true, 'Email is required'],

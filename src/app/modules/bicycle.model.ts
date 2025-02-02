@@ -46,4 +46,4 @@ const bicycleSchema = new Schema<BicylceInterface>(
   { timestamps: true, versionKey: false },
 );
 
-export const BicycleSchema = mongoose.model('Bicycle', bicycleSchema);
+export const BicycleSchema = mongoose.model('Bicycle', bicycleSchema, 'bicycles');

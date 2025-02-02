@@ -1,6 +1,8 @@
 import { RequestHandler } from 'express';
 import { BicycleValidation } from './bicycle.validation';
 import { BicycleServices } from './bicycle.service';
+import { OrderSchema } from './bicycle.order.model';
+import { OrderValidationSchema } from './bicycle.order.validation';
 
 //  The Flow is (url, cb function) @bicycle.route → →
 // (validation & error middleware , callback of services) @bicycle.controller → →
@@ -113,11 +115,36 @@ const deleteBicycle: RequestHandler = async (req, res, next): Promise<void> => {
 };
 
 // create new order
+// const createOrder: RequestHandler = async (req, res, next) => {
+//   try {
+//     const { email, product, quantity, totalPrice } = req.body;
+//     console.log(req.body);
+//     // Call the service to create the order and manage quantity
+//     const newOrder = await BicycleServices.createNewOrder({
+//       email,
+//       product,
+//       quantity,
+//       totalPrice,
+//     });
+//     console.log(newOrder)
+
+//     res.status(201).json({
+//       message: 'Order created successfully',
+//       status: true,
+//       data: newOrder,
+//     });
+//   } catch (error) {
+//     next(error); // Pass the error to the global error handler
+//   }
+// };
 const createOrder: RequestHandler = async (req, res, next) => {
   try {
-    const { email, product, quantity, totalPrice } = req.body;
 
-    // Call the service to create the order and manage quantity
+    const validatedOrder = await OrderValidationSchema.parse(req.body);
+    const { email, product, quantity, totalPrice } = validatedOrder;
+    
+
+    // Call the service to create the order and manage stock
     const newOrder = await BicycleServices.createNewOrder({
       email,
       product,
@@ -125,15 +152,21 @@ const createOrder: RequestHandler = async (req, res, next) => {
       totalPrice,
     });
 
+
     res.status(201).json({
       message: 'Order created successfully',
       status: true,
       data: newOrder,
     });
   } catch (error) {
-    next(error); // Pass the error to the global error handler
+    console.error('Error in createOrder:', error);
+    next(error); // Pass error to global error handler
   }
 };
+
+export default createOrder;
+
+
 
 // count total revenue from orders
 const countRevenue: RequestHandler = async (req, res, next) => {

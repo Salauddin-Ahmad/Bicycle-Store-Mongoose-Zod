@@ -51,52 +51,110 @@ const deleteBicycleById = async (productId: string) => {
 };
 
 //  Creates a new order and also upates the stock of product quantities
-const createNewOrder = async ({
-  email,
-  product,
-  quantity,
-  totalPrice,
-}: {
-  email: string;
-  product: string;
-  quantity: number;
-  totalPrice: number;
-}) => {
-  // Find the product in the database
-  const productDocument = await BicycleSchema.findById(product);
+// const createNewOrder = async ({
+//   email,
+//   product,
+//   quantity,
+//   totalPrice,
+// }: {
+//   email: string;
+//   product: string;
+//   quantity: number;
+//   totalPrice: number;
+// }) => {
+//   // Find the product in the database
+//   const productDocument = await BicycleSchema.findById( product );
+// console.log(productDocument)
 
-  if (!productDocument) {
-    throw new Error('Product not found');
+
+//   if (!productDocument) {
+//     throw new Error('Product not found');
+//   }
+
+//   // Check if there is enough stock
+//   if (productDocument.quantity < quantity) {
+//     throw new Error('Insufficient stock available');
+//   }
+
+//   // Reduce the product quantity
+//   productDocument.quantity -= quantity;
+
+//   // Set inStock to false if quantity reaches 0
+//   if (productDocument.quantity === 0) {
+//     productDocument.inStock = false;
+//   }
+
+//   // Save the updated product document
+//   await productDocument.save();
+
+//   // Create the order
+//   const newOrder = await OrderSchema.create({
+//     email,
+//     product,
+//     quantity,
+//     totalPrice,
+//     createdAt: new Date().toISOString(),
+//     updatedAt: new Date().toISOString(),
+//   });
+
+//   return newOrder;
+// };
+
+
+const createNewOrder = async ({ email, product, quantity, totalPrice }: { email: string; product: string; quantity: number; totalPrice: number; }) => {
+  try {
+    console.log('Incoming product ID:', product);
+    
+    // Check validity
+    if (!mongoose.Types.ObjectId.isValid(product)) {
+      throw new Error(`Invalid product ID: ${product}`);
+    }
+    
+    // Convert product to ObjectId
+    const productId = new mongoose.Types.ObjectId(product);
+    console.log('Converted productId:', productId);
+
+    // Find the product in the database
+    const productDocument = await BicycleSchema.findById(productId);
+    console.log('Product Retrieved from DB:', productDocument);
+
+    if (!productDocument) {
+      throw new Error(`Product not found: ${product}`);
+    }
+
+    // Check if there is enough stock
+    if (productDocument.quantity < quantity) {
+      throw new Error('Insufficient stock available');
+    }
+
+    // Reduce the product quantity
+    productDocument.quantity -= quantity;
+    if (productDocument.quantity === 0) {
+      productDocument.inStock = false;
+    }
+
+    // Save the updated product document
+    await productDocument.save();
+
+    // Create the order
+    const newOrder = await OrderSchema.create({
+      email,
+      product: productId,
+      quantity,
+      totalPrice,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
+
+    return newOrder;
+  } catch (error) {
+    console.error('Error in createNewOrder:', error);
+    throw new Error('Failed to create order');
   }
-
-  // Check if there is enough stock
-  if (productDocument.quantity < quantity) {
-    throw new Error('Insufficient stock available');
-  }
-
-  // Reduce the product quantity
-  productDocument.quantity -= quantity;
-
-  // Set inStock to false if quantity reaches 0
-  if (productDocument.quantity === 0) {
-    productDocument.inStock = false;
-  }
-
-  // Save the updated product document
-  await productDocument.save();
-
-  // Create the order
-  const newOrder = await OrderSchema.create({
-    email,
-    product,
-    quantity,
-    totalPrice,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  });
-
-  return newOrder;
 };
+
+
+export default createNewOrder;
 
 const calculateRevenue = async () => {
   const orders = await OrderSchema.aggregate([
