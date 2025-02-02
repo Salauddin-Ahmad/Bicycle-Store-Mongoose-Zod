@@ -50,57 +50,6 @@ const deleteBicycleById = async (productId: string) => {
   return deletedBicycle; // Return the deleted bicycle or null if not found
 };
 
-//  Creates a new order and also upates the stock of product quantities
-// const createNewOrder = async ({
-//   email,
-//   product,
-//   quantity,
-//   totalPrice,
-// }: {
-//   email: string;
-//   product: string;
-//   quantity: number;
-//   totalPrice: number;
-// }) => {
-//   // Find the product in the database
-//   const productDocument = await BicycleSchema.findById( product );
-// console.log(productDocument)
-
-
-//   if (!productDocument) {
-//     throw new Error('Product not found');
-//   }
-
-//   // Check if there is enough stock
-//   if (productDocument.quantity < quantity) {
-//     throw new Error('Insufficient stock available');
-//   }
-
-//   // Reduce the product quantity
-//   productDocument.quantity -= quantity;
-
-//   // Set inStock to false if quantity reaches 0
-//   if (productDocument.quantity === 0) {
-//     productDocument.inStock = false;
-//   }
-
-//   // Save the updated product document
-//   await productDocument.save();
-
-//   // Create the order
-//   const newOrder = await OrderSchema.create({
-//     email,
-//     product,
-//     quantity,
-//     totalPrice,
-//     createdAt: new Date().toISOString(),
-//     updatedAt: new Date().toISOString(),
-//   });
-
-//   return newOrder;
-// };
-
-
 const createNewOrder = async ({ email, product, quantity, totalPrice }: { email: string; product: string; quantity: number; totalPrice: number; }) => {
   try {
     // Check validity
