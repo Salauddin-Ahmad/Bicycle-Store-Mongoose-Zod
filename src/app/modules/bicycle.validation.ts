@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { TypeInterface } from './bicycle.interface';
 
 export const BicycleValidation = z.object({
-  // _id: z.string().min(5, {message: 'id is required'}), // Optional for new objects 
+  _id: z.string().optional(),
   name: z.string().min(1, { message: 'Name is required' }),
   brand: z.string().min(1, { message: 'Brand is required' }),
   price: z.number().min(0, { message: 'Price must be a positive number' }),

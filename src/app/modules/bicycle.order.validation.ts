@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 // Zod Schema for Order Validation// Define the Zod schema for order validation
 export const OrderValidationSchema = z.object({
+  _id: z.string().optional(),
   email: z.string().email({ message: 'Invalid email address' }),
   product: z
     .string()
