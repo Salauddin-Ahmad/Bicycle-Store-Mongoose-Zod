@@ -67,7 +67,7 @@ const updateBicycle: RequestHandler = async (req, res, next) => {
       productId,
       updateData,
     );
-
+    
     if (!updatedBicycle) {
       res.status(404).json({
         message: 'Bicycle not found',

@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { BicylceInterface } from './bicycle.interface';
 import { BicycleSchema } from './bicycle.model';
 import { OrderSchema } from './bicycle.order.model';
+import { BicycleValidation } from './bicycle.validation';
 
 const createBicylceIntoDB = async (bicylce: BicylceInterface) => {
   try {
@@ -24,17 +25,28 @@ const getSingleBicycleById = async (id: string) => {
 
 const updateBicyclebyId = async (
   productId: string,
-  updateData: Partial<typeof BicycleSchema>,
+  updateData: Partial<BicylceInterface>,
 ) => {
   // Validate the productId
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     throw new Error('Invalid Product ID');
   }
 
+  // Validate update data
+  const parsedData = BicycleValidation.partial().strict().safeParse(updateData);
+  if (!parsedData.success) {
+    console.error('Validation Errors:', parsedData.error.errors); // Debugging
+    throw new Error(
+      parsedData.error.errors
+        .map((err) => `${err.path}: ${err.message}`)
+        .join(', '),
+    );
+  }
+
   const updatedBicycle = await BicycleSchema.findByIdAndUpdate(
     productId, // Filter by the _id
-    { $set: updateData }, // Update the specified fields
-    { new: true }, // Return the updated document
+    { $set: parsedData.data }, // Update the specified fields
+    { new: true, runValidators: true }, // Return the updated document
   ).select('-__v');
 
   return updatedBicycle;
@@ -50,13 +62,23 @@ const deleteBicycleById = async (productId: string) => {
   return deletedBicycle; // Return the deleted bicycle or null if not found
 };
 
-const createNewOrder = async ({ email, product, quantity, totalPrice }: { email: string; product: string; quantity: number; totalPrice: number; }) => {
+const createNewOrder = async ({
+  email,
+  product,
+  quantity,
+  totalPrice,
+}: {
+  email: string;
+  product: string;
+  quantity: number;
+  totalPrice: number;
+}) => {
   try {
     // Check validity
     if (!mongoose.Types.ObjectId.isValid(product)) {
       throw new Error(`Invalid product ID: ${product}`);
     }
-    
+
     // Convert product to ObjectId
     const productId = new mongoose.Types.ObjectId(product);
 
@@ -97,7 +119,6 @@ const createNewOrder = async ({ email, product, quantity, totalPrice }: { email:
     throw new Error('Failed to create order');
   }
 };
-
 
 export default createNewOrder;
 
